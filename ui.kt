@@ -14,6 +14,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -105,5 +106,29 @@ fun botonStart(){
         ) {
             Text(text = "Start")
         }
+    }
+}
+
+// Crea el texto de la cuenta atras y el numero de la cuenta atras
+@Composable
+fun cuentaAtras(){
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentSize(Alignment.Center)
+            .padding(0.dp, 0.dp, 0.dp, 50.dp)
+    ) {
+        Text(text = "Cuenta atras:")
+    }
+    Row (
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentSize(Alignment.Center)
+            .padding(0.dp, 0.dp, 0.dp, 50.dp)
+    ){
+        Text(
+            text = cuentaAtras.value.toString(),
+            fontSize = 50.sp
+        )
     }
 }
