@@ -1,9 +1,21 @@
 package com.example.corrutinas_rec
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 /**
@@ -54,8 +66,44 @@ fun aux(){
 fun UserInterface(){
     Column {
         botonStart()
-        cuentaAtras()
-        fraseVF()
-        puntuacion()
+        // cuentaAtras()
+        // fraseVF()
+        // puntuacion()
+    }
+}
+
+// crea el boton start
+@Composable
+fun botonStart(){
+    // para crear el objeto que nos permite hacer una corrutina
+    val iuScope = rememberCoroutineScope()
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentSize(Alignment.Center)
+            .padding(0.dp, 20.dp, 0.dp, 50.dp)
+    ) {
+        Button(
+            onClick = {
+                // para que solo se pueda dar al boton una vez
+                if(state == State.WAITING){
+                    // reiniciar la cuenta atras y la puntuacion
+                    cuentaAtras.value = 20
+                    puntuacion.value = 0
+                    // iniciar la cuenta atras
+                    iuScope.launch {
+                        state = State.PLAYING
+                        while (cuentaAtras.value > 0){
+                            delay(1000)
+                            cuentaAtras.value -= 1
+                        }
+                        state = State.WAITING
+                    }
+                    aux()
+                }
+            }
+        ) {
+            Text(text = "Start")
+        }
     }
 }
