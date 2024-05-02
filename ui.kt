@@ -67,8 +67,8 @@ fun aux(){
 fun UserInterface(){
     Column {
         botonStart()
-        // cuentaAtras()
-        // fraseVF()
+        cuentaAtras()
+        fraseVF()
         // puntuacion()
     }
 }
@@ -131,4 +131,77 @@ fun cuentaAtras(){
             fontSize = 50.sp
         )
     }
+}
+
+// crea la frase y los botones verdadero y falso
+@Composable
+fun fraseVF(){
+    frase()
+    botonesFalsoVerdadero()
+}
+
+// crea el texto de la frase
+@Composable
+fun frase(){
+    // row de la frase
+    Row (
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentSize(Alignment.Center)
+            .padding(0.dp, 0.dp, 0.dp, 50.dp)
+    ){
+        Text(text = fraseActual.value.texto)
+    }
+}
+
+// crea los botones verdadero y falso
+@Composable
+fun botonesFalsoVerdadero(){
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentSize(Alignment.Center)
+            .padding(0.dp, 0.dp, 0.dp, 50.dp)
+    ){
+        // boton verdadero
+        botonFV(true)
+        // boton falso
+        botonFV(false)
+    }
+}
+
+// Boton que dependiendo del parametro crea el boton verdadero o falso
+@Composable
+fun botonFV(respuesta: Boolean){
+    Button(
+        onClick = {
+            if (state == State.PLAYING) {
+                comprobarFrase(respuesta)
+            }
+        },
+        // para que los botones tengan un poco de espacio
+        modifier = Modifier
+            .padding(end = 10.dp)
+    ) {
+        Text(text = if (respuesta==true) "Verdadero" else "Falso")
+    }
+}
+
+
+/**
+ * Comprobacion de si la frase es verdadera o falsa
+ */
+fun comprobarFrase(respuesta: Boolean){
+    if (respuesta == fraseActual.value.verdadero){
+        // acierto
+        puntuacion.value += 10
+    } else {
+        // fallo
+        puntuacion.value -= 5
+        if (puntuacion.value < 0){
+            puntuacion.value = 0
+        }
+    }
+    // asignar una nueva frase aleatoria
+    aux()
 }
