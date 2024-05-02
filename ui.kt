@@ -69,7 +69,7 @@ fun UserInterface(){
         botonStart()
         cuentaAtras()
         fraseVF()
-        // puntuacion()
+        puntuacion()
     }
 }
 
@@ -204,4 +204,23 @@ fun comprobarFrase(respuesta: Boolean){
     }
     // asignar una nueva frase aleatoria
     aux()
+}
+
+// crea el texto de la puntuacion y el numero de la puntuacion
+@Composable
+fun puntuacion(){
+    Row (
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentSize(Alignment.Center)
+    ){
+        Text(
+            text = "Puntuacion: ",
+            fontSize = 20.sp
+        )
+        Text(
+            text = puntuacion.value.toString(),
+            fontSize = 20.sp
+        )
+    }
 }
